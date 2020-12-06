@@ -1,10 +1,10 @@
-package cz.dostalma.MonolithicShop;
+package cz.dostalma.monolithicshop;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class MonolithicShopApplicationTests {
+class ApplicationTests {
 
 	@Test
 	void contextLoads() {
