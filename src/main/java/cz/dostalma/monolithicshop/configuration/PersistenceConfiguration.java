@@ -19,6 +19,7 @@ import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.Database;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -133,6 +134,8 @@ public class PersistenceConfiguration {
         SpringLiquibase liquibase = new SpringLiquibase();
         liquibase.setChangeLog("classpath:/db/project_model.xml");
         liquibase.setDataSource(dataSource());
+        liquibase.setContexts(env.getProperty("spring.liquibase.contexts"));
+        liquibase.setDropFirst(Boolean.valueOf(env.getProperty("spring.liquibase.drop-first")));
         return liquibase;
     }
 }

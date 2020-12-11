@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home page</title>
+    <link rel="stylesheet" th:href="@{/css/format.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+    <script type="text/javascript" th:src="@{/js/foo.js}"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $.ajax({
+                url : "/spring-thymeleaf/js",
+            });
+        });
+    </script>
+</head>
+<body>
+
+<div id="block">
+
+    <h2>
+        Product page
+    </h2>
+
+    <h1>Product List</h1>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th th:text="ID" />
+                <th th:text="Name" />
+                <th th:text="Price" />
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product, iStat : ${products}" th:style="${iStat.odd}? 'font-weight: bold;'"
+                th:alt-title="${iStat.even}? 'even' : 'odd'">
+                <td th:text="${product.id}" />
+                <td th:text="${product.name}" />
+                <td th:text="${product.price}" />
+            </tr>
+        </tbody>
+    </table>
+
+    <div>
+        <p>
+            <a th:href="@{/}" th:text="Home" />
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>

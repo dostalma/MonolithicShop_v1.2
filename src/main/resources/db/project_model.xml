@@ -3,4 +3,7 @@
 
     <include relativeToChangelogFile="true" file="db.changelog-init.xml"/>
 
+    <!-- Tests only -->
+    <include relativeToChangelogFile="true" file="db.changelog-import-test-data.xml"/>
+
 </databaseChangeLog>
