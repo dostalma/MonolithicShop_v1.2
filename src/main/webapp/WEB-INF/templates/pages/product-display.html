@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Product Display</title>
+    <!--/*/ <th:block th:include="fragments/general.html :: headerfiles"> </th:block> /*/-->
+</head>
+<body>
+    <div class="container">
+    <header th:insert="fragments/general.html :: header (title = 'Product Display page')"> </header>
+    <th:block th:replace="fragments/general.html :: navigation"/>
+
+    <p th:text="${product.name}">
+
+    <div class="product-dsp-wrapper">
+    <div class="product-dsp-left">
+        <img th:src="@{${product.catalogImageLink != null ? '/files/' + product.catalogImageLink : '/files/void.jpg'}}"
+                                                class="product-catalog-img" />
+    </div>
+
+    <div class="product-dsp-right">
+
+        <div class="add-to-basket">
+            <button type="button" class="btn-warning" th:text="${'Add to Basket'}"
+                    th:onclick="'javascript:addToBasket(' + ${product.id} + ');'"/>
+        </div>
+
+        <div class="price-container">
+            <span th:text="${'Price:' + product.price}"/>
+            <img th:src="@{/files/crown-coin.jpg}" class="currency-img" />
+        </div>
+        </div>
+    </div>
+
+    <span class="product-description" th:text="${product.description}" />
+    </div>
+
+    <div th:replace="fragments/general.html :: footer"></div>
+    </div>
+</body>
+</html>

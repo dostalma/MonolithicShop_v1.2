@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @Component
 public class ProductFacadeImpl implements ProductFacade {
@@ -21,5 +23,15 @@ public class ProductFacadeImpl implements ProductFacade {
     @Override
     public List<Product> getAllProducts() {
         return productService.getAllProducts();
+    }
+
+    @Override
+    public List<Product> getProductsByIds(Set<Long> productIds) {
+        return productService.getProductsByIds(productIds);
+    }
+
+    @Override
+    public Optional<Product> getProductById(Long id) {
+        return productService.getById(id);
     }
 }

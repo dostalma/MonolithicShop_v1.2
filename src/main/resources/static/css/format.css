@@ -1,3 +1,51 @@
 p {
-    background-color: aquamarine;
+    background-color: goldenrod;
+}
+
+table {
+    width: inherit !important;
+    padding: 14px;
+    text-align: center;
+}
+
+td, th {
+    padding: 10px;
+    border: solid 1px;
+    text-align: center;
+}
+
+.banner-img {
+    max-width: 450px;
+    max-height:450px;
+}
+
+.currency-img {
+    max-width: 45px;
+    max-height:45px;
+}
+
+.trade-img {
+    max-width: 30px;
+    max-height:30px;
+}
+
+.product-dsp-wrapper {
+    width: 500px;
+    //border: 1px solid black;
+    overflow: hidden; /* add this to contain floated children */
+}
+
+.product-dsp-left {
+    width: 300px;
+    float:left; /* add this */
+    //border: 1px solid red;
+}
+
+.product-dsp-right {
+    //border: 1px solid green;
+    float: left; /* add this */
+}
+
+.product-catalog-img {
+    max-height:150px;
 }

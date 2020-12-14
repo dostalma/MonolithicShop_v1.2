@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Home page</title>
+    <!--/*/ <th:block th:include="fragments/general.html :: headerfiles"> </th:block> /*/-->
+</head>
+<body>
+    <div class="container">
+        <header th:insert="fragments/general.html :: header (title = 'Monolithic shop home page')"> </header>
+
+        <th:block th:replace="fragments/general.html :: navigation"/>
+
+        <p>
+            Homepage body stuff
+        </p>
+
+        <div th:replace="fragments/general.html :: footer"></div>
+    </div>
+</body>
+</html>

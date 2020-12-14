@@ -16,15 +16,17 @@ public class Product implements Serializable {
 
     @Column(name = "NAME")
     private String name;
+
     @Column(name = "PRICE")
     private Double price;
 
-    public Product() {
-    }
+    @Column(name = "CATALOG_IMAGE")
+    private String catalogImageLink;
 
-    public Product(String name, Double price) {
-        this.name = name;
-        this.price = price;
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    public Product() {
     }
 
     public long getId() {
@@ -51,11 +53,30 @@ public class Product implements Serializable {
         this.price = price;
     }
 
+    public String getCatalogImageLink() {
+        return catalogImageLink;
+    }
+
+    public void setCatalogImageLink(String catalogImageLink) {
+        this.catalogImageLink = catalogImageLink;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", price=" + price +
+                ", catalogImageLink='" + catalogImageLink + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 
@@ -63,6 +84,8 @@ public class Product implements Serializable {
 
         private String name;
         private Double price;
+        private String catalogImageLink;
+        private String description;
 
         public ProductBuilder() { }
 
@@ -76,10 +99,22 @@ public class Product implements Serializable {
             return this;
         }
 
+        public ProductBuilder withCatalogImageLink(String catalogImageLink) {
+            this.catalogImageLink = catalogImageLink;
+            return this;
+        }
+
+        public ProductBuilder withDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
         public Product build() {
             Product product = new Product();
             product.setName(name);
             product.setPrice(price);
+            product.setCatalogImageLink(catalogImageLink);
+            product.setDescription(description);
 
             return product;
         }

@@ -8,7 +8,9 @@
         <column name="NAME" type="VARCHAR(100)">
             <constraints nullable="false" unique="true" uniqueConstraintName="UQ_PRODUCT_NAME"/>
         </column>
-        <column name="PRICE" type="DECIMAL(3,2)" />
+        <column name="PRICE" type="FLOAT(2)" />
+        <column name="CATALOG_IMAGE" type="VARCHAR(100)" />
+        <column name="DESCRIPTION" type="VARCHAR(250)" />
     </createTable>
 </changeSet>
 </databaseChangeLog>

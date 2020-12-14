@@ -18,7 +18,7 @@ public class HomeController {
 
         logger.info("Request for home page");
 
-        return "homepage";
+        return "pages/homepage";
     }
 
 }

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="headerfiles">
+    <meta charset="UTF-8">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- JS-Cookie -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+
+    <!-- favicon error fix -->
+    <link rel="shortcut icon" href="#">
+
+    <link rel="stylesheet" th:href="@{/css/format.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+
+    <script type="text/javascript" th:src="@{/js/main.js}"></script>
+
+</head>
+<body>
+    <div th:fragment="header (title)">
+        <h1 th:text="${title}">Title text</h1>
+        <img th:src="@{/images/bazaar.jpg}" class="banner-img" />
+    </div>
+
+    <div th:fragment="navigation">
+        <div>
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar" aria-hidden="true"></span>
+                            <span class="icon-bar" aria-hidden="true"></span>
+                            <span class="icon-bar" aria-hidden="true"></span>
+                        </button>
+                        <a class="navbar-brand" th:href="@{/}">
+                            Monolithic shop
+                        </a>
+                    </div>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li th:class="active">
+                                <a th:href="@{/products}">Products</a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav">
+                            <li th:class="active">
+                                <a th:href="@{/basket}">
+                                    Basket <span id="basket-counter">.</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li id="ui-toggle" class="hidden"></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <footer th:fragment="footer">
+        &copy; 2020 Footer
+    </footer>
+</body>
+</html>
