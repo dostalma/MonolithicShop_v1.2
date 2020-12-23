@@ -12,9 +12,11 @@ public interface ProductService {
 
     List<Product> getProductsByIds(Set<Long> productIds);
 
-    Optional<Product> getByName(String name);
+    Optional<Product> getProductByName(String name);
 
-    Optional<Product> getById(Long id);
+    Optional<Product> getProductById(Long id);
 
-    void deleteByName(String name);
+    void deleteProductByName(String name);
+
+    void saveProduct(Product product);
 }

@@ -26,17 +26,22 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> getByName(String name) {
+    public Optional<Product> getProductByName(String name) {
         return productRepository.findByName(name);
     }
 
     @Override
-    public Optional<Product> getById(Long id) {
+    public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
 
     @Override
-    public void deleteByName(String name) {
+    public void deleteProductByName(String name) {
         productRepository.deleteByName(name);
+    }
+
+    @Override
+    public void saveProduct(Product product) {
+        productRepository.saveAndFlush(product);
     }
 }

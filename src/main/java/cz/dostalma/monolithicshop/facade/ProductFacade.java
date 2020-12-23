@@ -1,17 +1,19 @@
 package cz.dostalma.monolithicshop.facade;
 
-import cz.dostalma.monolithicshop.model.Product;
+import cz.dostalma.monolithicshop.dto.ProductDto;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 public interface ProductFacade {
 
-    List<Product> getAllProducts();
+    List<ProductDto> getAllProducts();
 
-    List<Product> getProductsByIds(Set<Long> productIds);
+    List<ProductDto> getProductsByIds(Set<Long> productIds);
 
-    Optional<Product> getProductById(Long id);
+    ProductDto getProductById(Long id);
 
+    void createProduct(ProductDto product);
+
+    void updateProduct(ProductDto product);
 }

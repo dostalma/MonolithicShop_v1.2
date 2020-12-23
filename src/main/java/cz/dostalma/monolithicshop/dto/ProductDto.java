@@ -1,33 +1,14 @@
-package cz.dostalma.monolithicshop.model;
+package cz.dostalma.monolithicshop.dto;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "PRODUCT")
-public class Product implements Serializable {
+public class ProductDto implements Serializable {
 
-    private static final long serialVersionUID = 666L;
-
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name = "PRODUCT_ID")
     private Long id;
-
-    @Column(name = "NAME")
     private String name;
-
-    @Column(name = "PRICE")
     private Double price;
-
-    @Column(name = "CATALOG_IMAGE")
     private String catalogImageLink;
-
-    @Column(name = "DESCRIPTION")
     private String description;
-
-    public Product() {
-    }
 
     public Long getId() {
         return id;
@@ -71,7 +52,7 @@ public class Product implements Serializable {
 
     @Override
     public String toString() {
-        return "Product{" +
+        return "ProductDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", price=" + price +
@@ -80,43 +61,50 @@ public class Product implements Serializable {
                 '}';
     }
 
-    public static class ProductBuilder {
+    public static class ProductDTOBuilder {
 
+        private Long id;
         private String name;
         private Double price;
         private String catalogImageLink;
         private String description;
 
-        public ProductBuilder() { }
+        public ProductDTOBuilder() { }
 
-        public ProductBuilder withName(String name) {
+        public ProductDto.ProductDTOBuilder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public ProductDto.ProductDTOBuilder withName(String name) {
             this.name = name;
             return this;
         }
 
-        public ProductBuilder withPrice(Double price) {
+        public ProductDto.ProductDTOBuilder withPrice(Double price) {
             this.price = price;
             return this;
         }
 
-        public ProductBuilder withCatalogImageLink(String catalogImageLink) {
+        public ProductDto.ProductDTOBuilder withCatalogImageLink(String catalogImageLink) {
             this.catalogImageLink = catalogImageLink;
             return this;
         }
 
-        public ProductBuilder withDescription(String description) {
+        public ProductDto.ProductDTOBuilder withDescription(String description) {
             this.description = description;
             return this;
         }
 
-        public Product build() {
-            Product product = new Product();
-            product.setName(name);
-            product.setPrice(price);
-            product.setCatalogImageLink(catalogImageLink);
-            product.setDescription(description);
+        public ProductDto build() {
+            ProductDto productDto = new ProductDto();
+            productDto.setId(id);
+            productDto.setName(name);
+            productDto.setPrice(price);
+            productDto.setCatalogImageLink(catalogImageLink);
+            productDto.setDescription(description);
 
-            return product;
+            return productDto;
         }
     }
 }

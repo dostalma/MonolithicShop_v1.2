@@ -1,7 +1,7 @@
 package cz.dostalma.monolithicshop.controller;
 
+import cz.dostalma.monolithicshop.dto.ProductDto;
 import cz.dostalma.monolithicshop.facade.ProductFacade;
-import cz.dostalma.monolithicshop.model.Product;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ public class RestProductController {
     ProductFacade productFacade;
 
     @GetMapping
-    public List<Product> getAllProducts() {
+    public List<ProductDto> getAllProducts() {
         logger.info("REST Request to retrieve all products");
-        List<Product> list = productFacade.getAllProducts();
+        List<ProductDto> list = productFacade.getAllProducts();
         return list;
     }
 

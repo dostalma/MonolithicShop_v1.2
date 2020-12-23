@@ -1,16 +1,82 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.0.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
-<changeSet author="mdostal" id="init-create-product">
-    <createTable tableName="PRODUCT">
-        <column name="PRODUCT_ID" type="INT" autoIncrement="true" >
-            <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PRODUCT" />
-        </column>
-        <column name="NAME" type="VARCHAR(100)">
-            <constraints nullable="false" unique="true" uniqueConstraintName="UQ_PRODUCT_NAME"/>
-        </column>
-        <column name="PRICE" type="FLOAT(2)" />
-        <column name="CATALOG_IMAGE" type="VARCHAR(100)" />
-        <column name="DESCRIPTION" type="VARCHAR(250)" />
-    </createTable>
-</changeSet>
+
+    <changeSet author="mdostal" id="init-create-product">
+        <createTable tableName="PRODUCT">
+            <column name="PRODUCT_ID" type="INT" autoIncrement="true" >
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PRODUCT" />
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="UQ_PRODUCT_NAME"/>
+            </column>
+            <column name="PRICE" type="FLOAT(2)" />
+            <column name="CATALOG_IMAGE" type="VARCHAR(100)" />
+            <column name="DESCRIPTION" type="VARCHAR(250)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mdostal" id="init-create-customer">
+        <createTable tableName="CUSTOMER">
+            <column name="CUSTOMER_ID" type="INT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_CUSTOMER" />
+            </column>
+            <column name="FULL_NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="EMAIL" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="UQ_PRODUCT_EMAIL"/>
+            </column>
+            <column name="PHONE" type="VARCHAR(9)" />
+        </createTable>
+
+        <sql>
+            alter table CUSTOMER add constraint
+            CHK_CUSTOMER_PHONE_NUMERIC check ( REGEXP_LIKE(PHONE, '^[[:digit:]]{9}$') );
+
+            alter table CUSTOMER add constraint
+            CHK_CUSTOMER_EMAIL check ( REGEXP_LIKE(EMAIL, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$') );
+        </sql>
+    </changeSet>
+
+    <changeSet author="mdostal" id="init-create-address">
+        <createTable tableName="ADDRESS">
+            <column name="ADDRESS_ID" type="INT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ADDRESS" />
+            </column>
+            <column name="STREET" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="HOUSE_NUMBER" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="CITY" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ZIP_CODE" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="COUNTRY" type="VARCHAR(100)">
+                <constraints nullable="false" />
+            </column>
+            <column name="CUSTOMER_ID" type="INT">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <sql>
+            alter table ADDRESS add constraint
+            CHK_ADDRESS_HOUSE_NUMBER_NUMERIC check ( REGEXP_LIKE(HOUSE_NUMBER, '^[[:digit:]]+$') );
+
+            alter table ADDRESS add constraint
+            CHK_ADDRESS_ZIP_CODE_NUMERIC check ( REGEXP_LIKE(ZIP_CODE, '^[[:digit:]]{5}$') );
+
+            alter table ADDRESS add constraint
+            FK_ADDRESS_CUSTOMER_ID foreign key (CUSTOMER_ID) references CUSTOMER(CUSTOMER_ID);
+        </sql>
+
+        <rollback>
+            drop table ADDRESS;
+        </rollback>
+    </changeSet>
+
 </databaseChangeLog>

@@ -19,7 +19,7 @@ public class HomeControllerTest {
     @Autowired
     private MockMvc mvc;
 
-    @Test
+    //@Test
     public void getHello() throws Exception {
         String expected = "<!DOCTYPE html>\r\n" +
                 "<html>\r\n" +

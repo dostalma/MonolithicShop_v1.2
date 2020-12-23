@@ -2,10 +2,15 @@
 <html lang="en">
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="headerfiles">
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- font awesome -->
+    <!--
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+    -->
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -42,20 +47,19 @@
                             <span class="icon-bar" aria-hidden="true"></span>
                             <span class="icon-bar" aria-hidden="true"></span>
                         </button>
-                        <a class="navbar-brand" th:href="@{/}">
-                            Monolithic shop
-                        </a>
+                        <a class="navbar-brand" th:href="@{/}" th:text="#{app.name}" />
                     </div>
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
                             <li th:class="active">
-                                <a th:href="@{/products}">Products</a>
+                                <a th:href="@{/products}" th:text="#{products.title}"/>
                             </li>
                         </ul>
                         <ul class="nav navbar-nav">
                             <li th:class="active">
                                 <a th:href="@{/basket}">
-                                    Basket <span id="basket-counter">.</span>
+                                    <span th:text="#{basket.title}" />
+                                    <span id="basket-counter">.</span>
                                 </a>
                             </li>
                         </ul>

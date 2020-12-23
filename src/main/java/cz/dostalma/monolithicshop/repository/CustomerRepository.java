@@ -1,0 +1,13 @@
+package cz.dostalma.monolithicshop.repository;
+
+import cz.dostalma.monolithicshop.model.Customer;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface CustomerRepository extends JpaRepository<Customer, Long> {
+
+    Optional<Customer> findByEmail(String email);
+
+    void deleteByEmail(String email);
+}

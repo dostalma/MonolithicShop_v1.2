@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Product Display</title>
+    <title th:text="#{product.display.title.head}"></title>
     <!--/*/ <th:block th:include="fragments/general.html :: headerfiles"> </th:block> /*/-->
 </head>
 <body>
     <div class="container">
-    <header th:insert="fragments/general.html :: header (title = 'Product Display page')"> </header>
+    <header th:insert="fragments/general.html :: header (title = #{product.display.title})"> </header>
     <th:block th:replace="fragments/general.html :: navigation"/>
 
     <p th:text="${product.name}">
@@ -20,21 +20,25 @@
     <div class="product-dsp-right">
 
         <div class="add-to-basket">
-            <button type="button" class="btn-warning" th:text="${'Add to Basket'}"
+            <button type="button" class="btn-warning" th:text="#{button.add.to.basket}"
                     th:onclick="'javascript:addToBasket(' + ${product.id} + ');'"/>
         </div>
 
         <div class="price-container">
-            <span th:text="${'Price:' + product.price}"/>
+            <span th:text="#{column.price} + ' ' + ${product.price}"/>
+
+
             <img th:src="@{/files/crown-coin.jpg}" class="currency-img" />
         </div>
         </div>
     </div>
 
     <span class="product-description" th:text="${product.description}" />
+
+
+    <div th:replace="fragments/general.html :: footer" />
     </div>
 
-    <div th:replace="fragments/general.html :: footer"></div>
-    </div>
+
 </body>
 </html>
