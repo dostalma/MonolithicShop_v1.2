@@ -2,11 +2,14 @@ package cz.dostalma.monolithicshop.facade;
 
 import cz.dostalma.monolithicshop.dto.AddressDto;
 import cz.dostalma.monolithicshop.dto.CustomerDto;
+import cz.dostalma.monolithicshop.dto.PaymentMethodDto;
 import cz.dostalma.monolithicshop.mapper.DtoToEntityMapper;
 import cz.dostalma.monolithicshop.model.Address;
 import cz.dostalma.monolithicshop.model.Customer;
+import cz.dostalma.monolithicshop.model.PaymentMethod;
 import cz.dostalma.monolithicshop.service.AddressService;
 import cz.dostalma.monolithicshop.service.CustomerService;
+import cz.dostalma.monolithicshop.service.PaymentService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -24,6 +27,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
 
     @Autowired
     AddressService addressService;
+
+    @Autowired
+    PaymentService paymentService;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -65,13 +71,13 @@ public class CustomerFacadeImpl implements CustomerFacade {
         AddressDto addressDto = dto.getAddress();
         if (addressDto != null) {
             Long customerId = customerService.getCustomerByEmail(dto.getEmail()).get().getId();
+            addressDto.setCustomerId(customerId);
             Optional<Address> addressEntityOpt = addressService.getAddressByDtoFields(addressDto);
             if (addressEntityOpt.isPresent()) {
                 return;
             }
             Address addressEntity = new Address();
             addressEntityMapper.map(addressDto, addressEntity);
-            addressEntity.setCustomerId(customerId);
 
             addressService.saveAddress(addressEntity);
         }
@@ -87,5 +93,22 @@ public class CustomerFacadeImpl implements CustomerFacade {
             entity.setId(id);
             customerService.saveCustomer(entity);
         }
+    }
+
+    @Override
+    public AddressDto getAddressById(Long id) {
+        return modelMapper.map(addressService.getAddressById(id).orElse(null), AddressDto.class);
+    }
+
+    @Override
+    public List<PaymentMethodDto> getAllPaymentMethods() {
+        return paymentService.getAllPaymentMethods().stream()
+                .map(paymentMethod -> modelMapper.map(paymentMethod, PaymentMethodDto.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public PaymentMethodDto getPaymentMethodById(Long id) {
+        return modelMapper.map(paymentService.getPaymentMethodById(id).orElse(new PaymentMethod()), PaymentMethodDto.class);
     }
 }

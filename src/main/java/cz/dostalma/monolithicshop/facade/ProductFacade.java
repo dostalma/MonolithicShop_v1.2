@@ -9,7 +9,7 @@ public interface ProductFacade {
 
     List<ProductDto> getAllProducts();
 
-    List<ProductDto> getProductsByIds(Set<Long> productIds);
+    List<ProductDto> getProductsByIds(List<Long> productIds);
 
     ProductDto getProductById(Long id);
 

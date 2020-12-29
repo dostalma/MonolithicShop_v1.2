@@ -15,7 +15,7 @@ function addToBasket(id) {
     }
 
     let basketContent = Cookies.get('basket-content');
-    if (typeof basketContent == 'undefined') {
+    if (typeof basketContent == 'undefined' || basketContent === "") {
         Cookies.set('basket-content', id.toString());
     } else {
         Cookies.set('basket-content', basketContent + ";" + id.toString());
@@ -42,18 +42,18 @@ function setBasketCounterValue() {
     $('#basket-counter').text(
         typeof basketContent == 'undefined'
             ? 0
-            : basketContent.split(';').length);
+            : $(basketContent.split(';')).not([""]).get().length);
 }
 
 function convertBasketCookieToProductQuantitiesMap() {
     let basketContent = Cookies.get('basket-content');
     let productQuantities = new Map();
-    if (typeof basketContent != 'undefined') {
+    if (typeof basketContent != 'undefined' && basketContent !== "") {
         $.each(basketContent.split(';'), function(index, productId) {
             if (productQuantities.has(productId)) {
                 let current = productQuantities.get(productId);
                 productQuantities.set(productId, current + 1);
-            } else {
+            } else if (productId !== "") {
                 productQuantities.set(productId, 1)
             }
         });

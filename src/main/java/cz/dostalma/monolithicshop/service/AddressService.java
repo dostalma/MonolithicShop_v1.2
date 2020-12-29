@@ -15,5 +15,7 @@ public interface AddressService {
 
     Optional<Address> getAddressByDtoFields(AddressDto dto);
 
-    void saveAddress(Address address);
+    Optional<Address> getAddressById(Long id);
+
+    Address saveAddress(Address address);
 }

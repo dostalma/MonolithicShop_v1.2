@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsByIds(Set<Long> productIds) {
+    public List<Product> getProductsByIds(List<Long> productIds) {
         return productRepository.findAllById(productIds);
     }
 
@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveProduct(Product product) {
-        productRepository.saveAndFlush(product);
+    public Product saveProduct(Product product) {
+        return productRepository.saveAndFlush(product);
     }
 }

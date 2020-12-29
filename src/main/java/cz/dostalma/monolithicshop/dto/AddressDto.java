@@ -1,13 +1,29 @@
 package cz.dostalma.monolithicshop.dto;
 
-public class AddressDto {
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.io.Serializable;
+
+public class AddressDto implements Serializable {
 
     private Long id;
+
+    @NotBlank(message = "Street is mandatory")
     private String street;
+
+    @NotBlank(message = "House number is mandatory")
     private String houseNumber;
+
+    @NotBlank(message = "City is mandatory")
     private String city;
+
+    @NotBlank(message = "Zip code is mandatory")
+    @Size(min=5, max=5)
     private String zipCode;
+
+    @NotBlank(message = "Country is mandatory")
     private String country;
+
     private Long customerId;
 
     public AddressDto() {

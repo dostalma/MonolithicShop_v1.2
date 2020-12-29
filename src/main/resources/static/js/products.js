@@ -5,6 +5,6 @@ $( document ).ready(function() {
     let productQuantitiesMap = convertBasketCookieToProductQuantitiesMap();
 
     for (let [key, value] of productQuantitiesMap) {
-        $('#quantityFieldProduct_' + key).val(value);
+        $('#quantityFieldProduct_' + key).val(value).text(value);
     }
 });

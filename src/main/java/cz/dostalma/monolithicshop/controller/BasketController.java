@@ -42,7 +42,7 @@ public class BasketController {
                 }
             }
 
-            List<ProductDto> productList = productFacade.getProductsByIds(productIds);
+            List<ProductDto> productList = productFacade.getProductsByIds(new ArrayList<>(productIds));
 
             model.addAttribute("products", productList);
         }

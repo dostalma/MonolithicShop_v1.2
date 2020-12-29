@@ -39,7 +39,12 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public void saveAddress(Address address) {
-        addressRepository.saveAndFlush(address);
+    public Optional<Address> getAddressById(Long id) {
+        return addressRepository.findById(id);
+    }
+
+    @Override
+    public Address saveAddress(Address address) {
+        return addressRepository.saveAndFlush(address);
     }
 }

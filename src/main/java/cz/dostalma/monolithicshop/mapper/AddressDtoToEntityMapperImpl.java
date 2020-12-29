@@ -24,5 +24,6 @@ public class AddressDtoToEntityMapperImpl implements DtoToEntityMapper {
         entityAddress.setCity(dtoAddress.getCity() != null               ? dtoAddress.getCity()         : entityAddress.getCity());
         entityAddress.setZipCode(dtoAddress.getZipCode() != null         ? dtoAddress.getZipCode()      : entityAddress.getZipCode());
         entityAddress.setCountry(dtoAddress.getCountry() != null         ? dtoAddress.getCountry()      : entityAddress.getCountry());
+        entityAddress.setCustomerId(dtoAddress.getCustomerId() != null   ? dtoAddress.getCustomerId()      : entityAddress.getCustomerId());
     }
 }

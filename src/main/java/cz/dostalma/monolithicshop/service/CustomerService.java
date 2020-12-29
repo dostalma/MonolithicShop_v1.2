@@ -15,5 +15,5 @@ public interface CustomerService {
 
     void deleteCustomerByEmail(String email);
 
-    void saveCustomer(Customer customer);
+    Customer saveCustomer(Customer customer);
 }

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Basket</title>
+    <title th:text="#{basket.title}">Basket</title>
     <!--/*/ <th:block th:include="fragments/general.html :: headerfiles"> </th:block> /*/-->
-    <script type="text/javascript" th:src="@{/js/basket.js}"></script>
+    <script type="text/javascript" th:src="@{/js/products.js}"></script>
 </head>
 <body>
 
@@ -31,7 +31,7 @@
             <th th:text="#{column.name}"  style="min-width: 100px"/>
             <th th:text="#{column.price}" style="min-width: 50px"/>
             <th th:text="#{column.image}" />
-            <th style="min-width: 50px">Actions</th>
+            <th th:text="#{column.action}" style="min-width: 50px" />
         </tr>
         </thead>
         <tbody>
@@ -51,7 +51,6 @@
                 <div class="basket-actions">
                     <input type="number" class="quantity-counter" th:id="${'quantityFieldProduct_' + product.id}"
                         onchange="adjustBasketContentCookie(this)"/>
-
                 </div>
             </td>
         </tr>

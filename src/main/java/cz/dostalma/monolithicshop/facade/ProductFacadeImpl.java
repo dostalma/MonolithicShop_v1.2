@@ -33,7 +33,7 @@ public class ProductFacadeImpl implements ProductFacade {
     }
 
     @Override
-    public List<ProductDto> getProductsByIds(Set<Long> productIds) {
+    public List<ProductDto> getProductsByIds(List<Long> productIds) {
         return productService.getProductsByIds(productIds).stream()
                         .map(product -> modelMapper.map(product, ProductDto.class))
                         .collect(Collectors.toList());

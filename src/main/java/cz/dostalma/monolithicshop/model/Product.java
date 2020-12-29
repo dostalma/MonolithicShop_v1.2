@@ -2,6 +2,7 @@ package cz.dostalma.monolithicshop.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "PRODUCT")
@@ -25,6 +26,9 @@ public class Product implements Serializable {
 
     @Column(name = "DESCRIPTION")
     private String description;
+
+    @OneToMany(mappedBy = "product")
+    Set<ProductInOrder> orders;
 
     public Product() {
     }
@@ -67,6 +71,14 @@ public class Product implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<ProductInOrder> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(Set<ProductInOrder> orders) {
+        this.orders = orders;
     }
 
     @Override

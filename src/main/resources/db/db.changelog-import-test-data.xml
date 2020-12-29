@@ -13,4 +13,20 @@
         </insert>
     </changeSet>
 
+    <changeSet author="mdostal" id="test-import-2" context="test">
+        <sql>
+            insert into CUSTOMER(FULL_NAME, EMAIL, PHONE)
+            values ('John Doe', 'user1@foo.com', '123456789');
+
+            insert into ADDRESS(STREET, HOUSE_NUMBER, CITY, ZIP_CODE, COUNTRY, CUSTOMER_ID)
+            values ('Noob Street', '1234', 'Nabville', '09876', 'Nabland', 1);
+
+            insert into ORDERS(CUSTOMER_ID, SHIPPING_ADDRESS_ID, PAYMENT_METHOD_ID, TOTAL_PRICE)
+            values (1, 1, 1, 3.99);
+
+            insert into PRODUCT_ORDERS(PRODUCT_ID, ORDERS_ID)
+            values (1, 1);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>

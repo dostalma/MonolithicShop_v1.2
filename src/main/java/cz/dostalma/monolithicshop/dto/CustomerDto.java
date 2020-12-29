@@ -1,15 +1,37 @@
 package cz.dostalma.monolithicshop.dto;
 
-import java.io.Serializable;
+import cz.dostalma.monolithicshop.validation.FieldsValueMatch;
 
+import java.io.Serializable;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+
+@FieldsValueMatch.List({
+        @FieldsValueMatch(
+                field = "email",
+                fieldMatch = "confirmationEmail",
+                message = "Email addresses do not match!"
+        )
+})
 public class CustomerDto implements Serializable {
 
     private Long id;
+
+    @NotBlank(message = "Full name is mandatory")
     private String fullName;
+
+    @NotBlank(message = "Please enter a valid e-mail address")
+    @Email(message = "Please enter a valid e-mail address")
     private String email;
+
+    @NotBlank(message = "Please enter a valid e-mail address")
+    @Email(message = "Please enter a valid e-mail address")
     private String confirmationEmail;
+
+    @NotBlank(message = "Phone is mandatory")
     private String phone;
 
+    @Valid
     private AddressDto address;
 
     public CustomerDto() {

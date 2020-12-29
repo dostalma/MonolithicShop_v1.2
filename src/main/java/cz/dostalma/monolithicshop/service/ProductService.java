@@ -10,7 +10,7 @@ public interface ProductService {
 
     List<Product> getAllProducts();
 
-    List<Product> getProductsByIds(Set<Long> productIds);
+    List<Product> getProductsByIds(List<Long> productIds);
 
     Optional<Product> getProductByName(String name);
 
@@ -18,5 +18,5 @@ public interface ProductService {
 
     void deleteProductByName(String name);
 
-    void saveProduct(Product product);
+    Product saveProduct(Product product);
 }

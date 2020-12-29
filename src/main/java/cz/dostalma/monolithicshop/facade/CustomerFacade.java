@@ -1,6 +1,8 @@
 package cz.dostalma.monolithicshop.facade;
 
+import cz.dostalma.monolithicshop.dto.AddressDto;
 import cz.dostalma.monolithicshop.dto.CustomerDto;
+import cz.dostalma.monolithicshop.dto.PaymentMethodDto;
 
 import java.util.List;
 
@@ -16,4 +18,9 @@ public interface CustomerFacade {
 
     void updateCustomer(CustomerDto customer);
 
+    AddressDto getAddressById(Long id);
+
+    List<PaymentMethodDto> getAllPaymentMethods();
+
+    PaymentMethodDto getPaymentMethodById(Long id);
 }

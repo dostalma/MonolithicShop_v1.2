@@ -79,4 +79,72 @@
         </rollback>
     </changeSet>
 
+    <changeSet author="mdostal" id="init-create-payment-methods">
+        <createTable tableName="PAYMENT_METHOD">
+            <column name="PAYMENT_METHOD_ID" type="INT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_PAYMENT_METHOD" />
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false" unique="true" uniqueConstraintName="UQ_PAYMENT_METHOD_NAME"/>
+            </column>
+            <column name="ENABLED" type="NUMBER(1)" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet author="mdostal" id="init-create-orders">
+        <createTable tableName="ORDERS">
+            <column name="ORDERS_ID" type="INT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PK_ORDER" />
+            </column>
+            <column name="CUSTOMER_ID" type="INT">
+                <constraints nullable="false" />
+            </column>
+            <column name="SHIPPING_ADDRESS_ID" type="INT">
+                <constraints nullable="false" />
+            </column>
+            <column name="PAYMENT_METHOD_ID" type="INT">
+                <constraints nullable="false" />
+            </column>
+            <column name="TOTAL_PRICE" type="FLOAT(2)" />
+        </createTable>
+
+        <sql>
+            alter table ORDERS add constraint
+            FK_ORDERS_CUSTOMER_ID foreign key (CUSTOMER_ID) references CUSTOMER(CUSTOMER_ID);
+
+            alter table ORDERS add constraint
+            FK_ORDERS_SHIPPING_ADDRESS_ID foreign key (SHIPPING_ADDRESS_ID) references ADDRESS(ADDRESS_ID);
+
+            alter table ORDERS add constraint
+            FK_ORDERS_PAYMENT_METHOD_ID foreign key (PAYMENT_METHOD_ID) references PAYMENT_METHOD(PAYMENT_METHOD_ID);
+        </sql>
+    </changeSet>
+
+    <changeSet author="mdostal" id="init-create-product_orders">
+        <createTable tableName="PRODUCT_ORDERS">
+            <column name="PRODUCT_ID" type="INT">
+                <constraints nullable="false" />
+            </column>
+            <column name="ORDERS_ID" type="INT">
+                <constraints nullable="false" />
+            </column>
+            <column name="QUANTITY" type="INT">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <sql>
+            alter table PRODUCT_ORDERS
+            add primary key (PRODUCT_ID, ORDERS_ID);
+
+            alter table PRODUCT_ORDERS add constraint
+            FK_PRODUCT_ORDERS_PRODUCT_ID foreign key (PRODUCT_ID) references PRODUCT(PRODUCT_ID);
+
+            alter table PRODUCT_ORDERS add constraint
+            FK_PRODUCT_ORDERS_ORDERS_ID foreign key (ORDERS_ID) references ORDERS(ORDERS_ID);
+        </sql>
+    </changeSet>
+
 </databaseChangeLog>
