@@ -20,6 +20,9 @@ public class Customer implements Serializable {
     @Column(name = "EMAIL")
     private String email;
 
+    @Column(name = "Password")
+    private String password;
+
     @Column(name = "PHONE")
     private String phone;
 
@@ -48,6 +51,14 @@ public class Customer implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getPhone() {

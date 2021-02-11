@@ -1,19 +1,25 @@
 package cz.dostalma.monolithicshop.dto;
 
-import cz.dostalma.monolithicshop.model.Product;
+import cz.dostalma.monolithicshop.model.ProductInOrder;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class OrderDto implements Serializable {
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     private Long id;
     private Long customerId;
     private Long shippingAddressId;
     private Long paymentMethodId;
     private Double totalPrice;
-    private Map<ProductDto, Integer> products;
+    private Map<ProductDto, Integer> productMap;
 
     public Long getId() {
         return id;
@@ -55,11 +61,13 @@ public class OrderDto implements Serializable {
         this.totalPrice = totalPrice;
     }
 
-    public Map<ProductDto, Integer> getProducts() {
-        return products;
+
+    public Map<ProductDto, Integer> getProductMap() {
+        return productMap;
     }
 
-    public void setProducts(Map<ProductDto, Integer> products) {
-        this.products = products;
+    public void setProductMap(Map<ProductDto, Integer> productMap) {
+        this.productMap = productMap;
     }
+
 }

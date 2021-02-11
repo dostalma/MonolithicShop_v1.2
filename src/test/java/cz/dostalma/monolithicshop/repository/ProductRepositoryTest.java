@@ -1,6 +1,6 @@
 package cz.dostalma.monolithicshop.repository;
 
-import cz.dostalma.monolithicshop.configuration.PersistenceConfiguration;
+import cz.dostalma.monolithicshop.configuration.PersistenceConfig;
 import cz.dostalma.monolithicshop.model.Product;
 import org.junit.Assert;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {PersistenceConfiguration.class})
+@ContextConfiguration(classes = {PersistenceConfig.class})
 @TestPropertySource("classpath:persistence-test.properties")
 @Transactional
 @ActiveProfiles("test")

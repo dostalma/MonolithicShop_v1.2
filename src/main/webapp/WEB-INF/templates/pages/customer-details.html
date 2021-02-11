@@ -7,8 +7,10 @@
 <body>
     <div class="container">
     <header th:insert="fragments/general.html :: header (title = 'Customer Details')"> </header>
-    <th:block th:replace="fragments/general.html :: navigation"/>
+    <th:block th:replace="fragments/navigation.html :: main-navigation"/>
+    <th:block th:replace="fragments/navigation.html :: account-subnavigation"/>
 
+    <h1 th:text="#{customer.details}"/>
     <p th:text="xxx">
 
         <form class="form-horizontal" action="#" th:action="@{/customer/updateCustomer}" th:object="${customer}" method="post">

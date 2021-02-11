@@ -7,7 +7,7 @@
 <body>
     <div class="container">
     <header th:insert="fragments/general.html :: header (title = #{product.display.title})"> </header>
-    <th:block th:replace="fragments/general.html :: navigation"/>
+    <th:block th:replace="fragments/navigation.html :: main-navigation"/>
 
     <p th:text="${product.name}">
 

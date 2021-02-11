@@ -11,7 +11,13 @@ import javax.validation.constraints.*;
                 field = "email",
                 fieldMatch = "confirmationEmail",
                 message = "Email addresses do not match!"
+        )/*,
+        @FieldsValueMatch(
+                field = "password",
+                fieldMatch = "confirmationPassword",
+                message = "Passwords do not match!"
         )
+        */
 })
 public class CustomerDto implements Serializable {
 
@@ -28,7 +34,14 @@ public class CustomerDto implements Serializable {
     @Email(message = "Please enter a valid e-mail address")
     private String confirmationEmail;
 
+    //@NotBlank(message = "Please enter a valid password")
+    private String password = "";
+
+    //@NotBlank(message = "Please enter a valid confirmation password")
+    private String confirmationPassword = "";
+
     @NotBlank(message = "Phone is mandatory")
+    @Size(max = 9, message = "Phone number length must be between 0 and 9")
     private String phone;
 
     @Valid
@@ -61,12 +74,38 @@ public class CustomerDto implements Serializable {
         this.email = email;
     }
 
+    public CustomerDto withEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
     public String getConfirmationEmail() {
         return confirmationEmail;
     }
 
     public void setConfirmationEmail(String confirmationEmail) {
         this.confirmationEmail = confirmationEmail;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public CustomerDto withPassword(String password) {
+        this.password = password;
+        return this;
+    }
+
+    public String getConfirmationPassword() {
+        return confirmationPassword;
+    }
+
+    public void setConfirmationPassword(String confirmationPassword) {
+        this.confirmationPassword = confirmationPassword;
     }
 
     public String getPhone() {

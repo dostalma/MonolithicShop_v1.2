@@ -10,9 +10,12 @@ import cz.dostalma.monolithicshop.model.PaymentMethod;
 import cz.dostalma.monolithicshop.service.AddressService;
 import cz.dostalma.monolithicshop.service.CustomerService;
 import cz.dostalma.monolithicshop.service.PaymentService;
+import cz.dostalma.monolithicshop.validation.ExistingCustomerException;
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -42,6 +45,9 @@ public class CustomerFacadeImpl implements CustomerFacade {
     @Qualifier("addressMapper")
     DtoToEntityMapper addressEntityMapper;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
     @Override
     public List<CustomerDto> getAllCustomers() {
         return customerService.getAllCustomers().stream()
@@ -55,18 +61,39 @@ public class CustomerFacadeImpl implements CustomerFacade {
     }
 
     @Override
-    public void createNewCustomer(CustomerDto customer) {
-        // @TODO
+    public CustomerDto getCustomerByEmail(String email) {
+        return modelMapper.map(customerService.getCustomerByEmail(email).orElse(null), CustomerDto.class);
     }
 
     @Override
-    public void registerCustomer(CustomerDto dto) {
+    public void registerNewCustomer(CustomerDto customerDto) {
+        if (customerDto == null) {
+            return;
+        }
+
+        Customer existingEntity = customerService.getCustomerByEmail(customerDto.getEmail()).orElse(new Customer());
+        if (existingEntity != null && StringUtils.isNotEmpty(existingEntity.getPassword())) {
+            throw new ExistingCustomerException("A customer with the same email already exists.");
+        }
+
+        registerCustomer(customerDto, existingEntity);
+    }
+
+    @Override
+    public void registerCustomer(CustomerDto dto, Customer entity) {
         if (dto == null) {
             return;
         }
-        Customer customerEntity = customerService.getCustomerByEmail(dto.getEmail()).orElse(new Customer());
-        customerEntityMapper.map(dto, customerEntity);
-        customerService.saveCustomer(customerEntity);
+
+        Customer existingEntity = entity;
+        if (entity == null) {
+            existingEntity = customerService.getCustomerByEmail(dto.getEmail()).orElse(new Customer());
+        }
+
+        dto.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        customerEntityMapper.map(dto, existingEntity);
+        customerService.saveCustomer(existingEntity);
 
         AddressDto addressDto = dto.getAddress();
         if (addressDto != null) {

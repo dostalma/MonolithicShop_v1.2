@@ -20,6 +20,7 @@ public class CustomerDtoToEntityMapperImpl implements DtoToEntityMapper {
 
         entityCust.setId(dtoCust.getId() != null                ? dtoCust.getId()       : entityCust.getId());
         entityCust.setEmail(dtoCust.getEmail() != null          ? dtoCust.getEmail()    : entityCust.getEmail());
+        entityCust.setPassword(dtoCust.getPassword() != null    ? dtoCust.getPassword() : entityCust.getPassword());
         entityCust.setFullName(dtoCust.getFullName() != null    ? dtoCust.getFullName() : entityCust.getFullName());
         entityCust.setPhone(dtoCust.getPhone() != null          ? dtoCust.getPhone()    : entityCust.getPhone());
     }

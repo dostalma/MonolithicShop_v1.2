@@ -1,10 +1,9 @@
 package cz.dostalma.monolithicshop.repository;
 
-import cz.dostalma.monolithicshop.configuration.PersistenceConfiguration;
+import cz.dostalma.monolithicshop.configuration.PersistenceConfig;
 import cz.dostalma.monolithicshop.model.Order;
 import cz.dostalma.monolithicshop.model.Product;
 import cz.dostalma.monolithicshop.model.ProductInOrder;
-import org.assertj.core.util.Lists;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +19,7 @@ import java.util.*;
 
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {PersistenceConfiguration.class})
+@ContextConfiguration(classes = {PersistenceConfig.class})
 @TestPropertySource("classpath:persistence-test.properties")
 @Transactional
 @ActiveProfiles("test")
@@ -36,14 +35,22 @@ public class OrderRepositoryTest {
     public void testFindAllOrders() {
         List<Order> orders = orderRepository.findAll();
         Assert.assertNotNull(orders);
-        Assert.assertTrue(orders.size() == 1);
+        Assert.assertTrue(orders.size() == 2);
     }
 
     @Test
     public void testFindAllByCustomerId() {
         List<Order> orders = orderRepository.findAllByCustomerId(1l);
         Assert.assertNotNull(orders);
-        Assert.assertTrue(orders.size() == 1);
+        Assert.assertTrue(orders.size() == 2);
+    }
+
+    @Test
+    public void testFindAllOrdersByCustomerEmail() {
+        List<Order> orders = orderRepository.findAllOrdersByCustomerEmail("user1@foo.com");
+        Assert.assertNotNull(orders);
+        Assert.assertTrue(orders.size() == 2);
+        Assert.assertTrue(orders.get(0).getProducts().size() == 2);
     }
 
     @Test
@@ -60,6 +67,6 @@ public class OrderRepositoryTest {
 
         List<Order> orders = orderRepository.findAll();
         Assert.assertNotNull(orders);
-        Assert.assertTrue(orders.size() == 2);
+        Assert.assertTrue("Expected 3, but was:" + orders.size() ,orders.size() == 3);
     }
 }

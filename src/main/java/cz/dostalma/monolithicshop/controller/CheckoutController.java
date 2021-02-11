@@ -6,6 +6,7 @@ import cz.dostalma.monolithicshop.facade.CustomerFacade;
 import cz.dostalma.monolithicshop.facade.OrderFacade;
 import cz.dostalma.monolithicshop.facade.ProductFacade;
 import cz.dostalma.monolithicshop.validation.CheckoutStepValidator;
+import cz.dostalma.monolithicshop.validation.ValidationFieldErrorUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.*;
 
 @Controller
@@ -40,9 +42,12 @@ public class CheckoutController {
     @Autowired
     private CheckoutStepValidator checkoutStepValidator;
 
+    @Autowired
+    ValidationFieldErrorUtil validationFieldErrorUtil;
+
     @GetMapping
-    public String proceedToCheckout(@CookieValue(value = "basket-content", required = false) String basketContent, Model model) {
-        // @TODO add additional initial condition
+    public String proceedToCheckout(@CookieValue(value = "basket-content", required = false) String basketContent,
+                                    Model model, Principal principal) {
         if (StringUtils.isEmpty(basketContent) /* @TODO further validation */) {
             logger.info("Blocked unauthorized attempt to enter checkout");
             return "redirect:/";
@@ -81,15 +86,22 @@ public class CheckoutController {
 
         checkoutOrderDto.setProducts(productQuantitiesMap);
 
-        List<CustomerDto> customers = customerFacade.getAllCustomers();
+        CustomerDto customerDto = null;
 
+        if (principal != null) {
+            customerDto  = customerFacade.getCustomerByEmail(principal.getName());
+        }
+        if (customerDto == null) {
+            customerDto = new CustomerDto();
+        }
+
+        /*
         CustomerDto customerDto = customerFacade.getCustomerById(1l);
 
         if (customerDto.getAddress() == null) {
             customerDto.setAddress(customerFacade.getAddressById(2l));
         }
-
-        model.addAttribute("customers", customers);
+        */
 
         model.addAttribute("customerDto", customerDto);
 
@@ -97,13 +109,14 @@ public class CheckoutController {
     }
 
     @PostMapping("/submitAddress")
-        public String submitAddress(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model) {
+    public String submitAddress(@Valid @ModelAttribute CustomerDto customerDto, BindingResult bindingResult, Model model) {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("customerDto", customerDto);
+            validationFieldErrorUtil.addFieldErrorsFromObjectErrors(bindingResult);
             return "pages/checkout-address";
         }
-        customerFacade.registerCustomer(customerDto);
+
         checkoutOrderDto.setCustomer(customerDto);
 
         return CheckoutStep.STEP_PAYMENT.getRedirectionLink();
@@ -152,6 +165,7 @@ public class CheckoutController {
         checkoutOrderDto.setOrderSubmitted(true);
 
         // @TODO create final Order
+        customerFacade.registerCustomer(checkoutOrderDto.getCustomer(), null);
         orderFacade.createOrder(checkoutOrderDto);
 
         return CheckoutStep.STEP_COMPLETE.getRedirectionLink();

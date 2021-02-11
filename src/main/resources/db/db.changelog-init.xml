@@ -26,7 +26,11 @@
             <column name="EMAIL" type="VARCHAR(100)">
                 <constraints nullable="false" unique="true" uniqueConstraintName="UQ_PRODUCT_EMAIL"/>
             </column>
+            <column name="PASSWORD" type="VARCHAR(100)">
+                <constraints nullable="true"/>
+            </column>
             <column name="PHONE" type="VARCHAR(9)" />
+            <column name="ENABLED" type="NUMBER(1)" defaultValue="1" />
         </createTable>
 
         <sql>
@@ -35,6 +39,33 @@
 
             alter table CUSTOMER add constraint
             CHK_CUSTOMER_EMAIL check ( REGEXP_LIKE(EMAIL, '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$') );
+        </sql>
+    </changeSet>
+
+    <changeSet author="mdostal" id="init-create-authority">
+        <createTable tableName="AUTHORITY">
+            <column name="EMAIL" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="AUTHORITY" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <sql>
+            alter table AUTHORITY add constraint
+            FK_AUTHORITY_EMAIL foreign key (EMAIL) references CUSTOMER(EMAIL);
+
+            create trigger CUSTOMER_AUTHORITY_INSERT_TRG
+            after insert on CUSTOMER
+            for each row
+            insert into authority (EMAIL, AUTHORITY)  values (NEW.email, 'CUSTOMER');
+
+            create trigger CUSTOMER_AUTHORITY_DELETE_TRG
+            after delete on CUSTOMER
+            for each row
+            delete from authority
+            where email = old.email;
         </sql>
     </changeSet>
 

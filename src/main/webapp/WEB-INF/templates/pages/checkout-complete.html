@@ -9,7 +9,7 @@
 
 <div class="container">
     <header th:insert="fragments/general.html :: header (title = #{checkout.order.complete.title})"> </header>
-    <th:block th:replace="fragments/general.html :: navigation"/>
+    <th:block th:replace="fragments/navigation.html :: main-navigation"/>
 
     <h1 th:text="#{checkout.order.complete.title}"/>
 
