@@ -33,7 +33,7 @@ import java.util.Properties;
 @EnableJpaRepositories(basePackages = "cz.dostalma.monolithicshop")
 @PropertySource("classpath:persistence.properties")
 @EnableTransactionManagement
-public class PersistenceConfiguration {
+public class PersistenceConfig {
 
     private final static String BASE_PACKAGE_NAME = "cz.dostalma.monolithicshop";
 

@@ -3,6 +3,8 @@
 
     <include relativeToChangelogFile="true" file="db.changelog-init.xml"/>
 
+    <include relativeToChangelogFile="true" file="db.changelog-data-import.xml"/>
+
     <!-- Tests only -->
     <include relativeToChangelogFile="true" file="db.changelog-import-test-data.xml"/>
 

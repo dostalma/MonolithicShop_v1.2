@@ -6,10 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
@@ -40,6 +39,8 @@ public class WebConfig implements WebMvcConfigurer {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setEnableSpringELCompiler(true);
+        templateEngine.setEnableSpringELCompiler(true);
+        templateEngine.addDialect(new SpringSecurityDialect());
 
         return templateEngine;
     }
@@ -60,5 +61,19 @@ public class WebConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
         registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
+        registry.addResourceHandler("/files/**").addResourceLocations("file:C:/workspace/images/");
+    }
+
+    @Bean
+    public LocaleChangeInterceptor localeChangeInterceptor() {
+        LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
+        lci.setParamName("lang");
+        return lci;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(localeChangeInterceptor());
     }
 }

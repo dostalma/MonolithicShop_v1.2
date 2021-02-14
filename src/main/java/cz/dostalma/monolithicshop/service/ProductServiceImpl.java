@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Component
 public class ProductServiceImpl implements ProductService {
@@ -20,12 +21,27 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<Product> getByName(String name) {
-        return Optional.ofNullable(productRepository.findByName(name));
+    public List<Product> getProductsByIds(List<Long> productIds) {
+        return productRepository.findAllById(productIds);
     }
 
     @Override
-    public void deleteByName(String name) {
+    public Optional<Product> getProductByName(String name) {
+        return productRepository.findByName(name);
+    }
+
+    @Override
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
+    }
+
+    @Override
+    public void deleteProductByName(String name) {
         productRepository.deleteByName(name);
+    }
+
+    @Override
+    public Product saveProduct(Product product) {
+        return productRepository.saveAndFlush(product);
     }
 }
